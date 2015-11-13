@@ -17,13 +17,14 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
   s.description      = <<-DESC
+Collection view subclass for displaying tags as bubbles.
                        DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/BubbleTagView"
+  s.homepage         = "https://github.com/thefuntasty/BubbleTagView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "Michal Šimík" => "michal.simik@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/BubbleTagView.git", :tag => s.version.to_s }
+  s.author           = { "Michal Šimík" => "michal.simik@thefuntasty.com" }
+  s.source           = { :git => "https://github.com/thefuntasty/BubbleTagView.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, '8.0'
@@ -36,5 +37,5 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+   s.dependency 'FSQCollectionViewAlignedLayout', '~> 1.1'
 end

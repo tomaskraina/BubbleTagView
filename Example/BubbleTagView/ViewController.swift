@@ -7,13 +7,22 @@
 //
 
 import UIKit
+import BubbleTagView
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var bubbleTagView: BubbleTagView!
+   
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let items =  ["sport", "fashion", "party"]
+        bubbleTagView.setTags(items)
+        bubbleTagView.setHorizontalAlignment(.Left)
+        bubbleTagView.setCellCollor(UIColor.blackColor())
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

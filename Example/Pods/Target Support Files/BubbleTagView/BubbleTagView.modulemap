@@ -1,0 +1,6 @@
+framework module BubbleTagView {
+  umbrella header "BubbleTagView-umbrella.h"
+
+  export *
+  module * { export * }
+}

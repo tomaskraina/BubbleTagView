@@ -1,0 +1,17 @@
+PODS:
+  - BubbleTagView (0.1.0):
+    - FSQCollectionViewAlignedLayout (~> 1.1)
+  - FSQCollectionViewAlignedLayout (1.1.1)
+
+DEPENDENCIES:
+  - BubbleTagView (from `../`)
+
+EXTERNAL SOURCES:
+  BubbleTagView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  BubbleTagView: c436c6c9229632bbbcbf03ad968ac3dcd73995be
+  FSQCollectionViewAlignedLayout: 122006b230bf5635ae159f1ad1eaa9b5ef11391e
+
+COCOAPODS: 0.39.0
