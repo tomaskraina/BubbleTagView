@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'BubbleTagView_Example', :exclusive => true do
+  pod "BubbleTagView", :path => "../"
+end
+
+target 'BubbleTagView_Tests', :exclusive => true do
+  pod "BubbleTagView", :path => "../"
+
+  
+end
