@@ -52,10 +52,10 @@ public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollec
     
     //MARK: -public API
     public func setTags(tags: [String]) {
-        for tag in tags {
-            if tag != "" {
+        
+        self.items = []
+        for tag in tags where tag != ""{
                 self.items.append("#\(tag)")
-            }
         }
         
         CATransaction.begin()
