@@ -41,6 +41,9 @@ public enum HorizontalAlignment {
         var frame = self.bounds
         frame.size.height = CGFloat(25)
         
+        if let layout = self.collectionViewLayout as? FSQCollectionViewAlignedLayout {
+            layout.contentInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        }
         
         self.registerClass(BubbleTagViewCell.self, forCellWithReuseIdentifier: "TagCell")
         
@@ -54,6 +57,7 @@ public enum HorizontalAlignment {
     
     public override func prepareForInterfaceBuilder() {
         self.setTags(["hashtag1", "hashtag2", "hashtag3"])
+        self.setHorizontalAlignment(.Left)
     }
     
     //MARK: -public API

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SZz-kC-eLX" customClass="BubbleTagView" customModule="BubbleTagView">
-                                <rect key="frame" x="90" y="73" width="420" height="32"/>
+                                <rect key="frame" x="90" y="73" width="420" height="22"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>

@@ -46,7 +46,7 @@ class BubbleTagViewCell: UICollectionViewCell {
         let views = ["field": self.tagButton]
         
         
-        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[field]-5-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[field]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
         let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[field]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
         
         self.contentView.addConstraints(horizontalConstraints)
