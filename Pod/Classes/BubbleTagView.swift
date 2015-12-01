@@ -16,7 +16,7 @@ public enum HorizontalAlignment {
 }
 
 
-public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
+@IBDesignable public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var items:[String] =  []
     var hAlignment:FSQCollectionViewHorizontalAlignment = FSQCollectionViewHorizontalAlignment.Center
@@ -48,6 +48,12 @@ public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollec
         self.delegate = self
         
         self.backgroundColor = UIColor.clearColor()
+    }
+    
+    // MARK: - Designable
+    
+    public override func prepareForInterfaceBuilder() {
+        self.setTags(["hashtag1", "hashtag2", "hashtag3"])
     }
     
     //MARK: -public API
