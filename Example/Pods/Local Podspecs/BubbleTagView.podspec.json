@@ -1,16 +1,16 @@
 {
   "name": "BubbleTagView",
-  "version": "0.1.0",
-  "summary": "A short description of BubbleTagView.",
-  "description": "",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/BubbleTagView",
+  "version": "0.1.4",
+  "summary": "Collection view subclass for displaying tags as bubbles",
+  "description": "Collection view subclass for displaying tags as bubbles.",
+  "homepage": "https://github.com/thefuntasty/BubbleTagView",
   "license": "MIT",
   "authors": {
-    "Michal Šimík": "michal.simik@gmail.com"
+    "Michal Šimík": "michal.simik@thefuntasty.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/BubbleTagView.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/thefuntasty/BubbleTagView.git",
+    "tag": "0.1.4"
   },
   "platforms": {
     "ios": "8.0"

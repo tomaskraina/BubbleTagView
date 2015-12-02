@@ -1,5 +1,5 @@
 PODS:
-  - BubbleTagView (0.1.0):
+  - BubbleTagView (0.1.4):
     - FSQCollectionViewAlignedLayout (~> 1.1)
   - FSQCollectionViewAlignedLayout (1.1.1)
 
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BubbleTagView: c436c6c9229632bbbcbf03ad968ac3dcd73995be
+  BubbleTagView: dfc6814a8661a6a3b85e82371b8f26079b380f47
   FSQCollectionViewAlignedLayout: 122006b230bf5635ae159f1ad1eaa9b5ef11391e
 
 COCOAPODS: 0.39.0

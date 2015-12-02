@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "BubbleTagView"
-  s.version          = "0.1.2"
+  s.version          = "0.1.4"
   s.summary          = "Collection view subclass for displaying tags as bubbles"
 
 # This description is used to generate tags and improve search results.
