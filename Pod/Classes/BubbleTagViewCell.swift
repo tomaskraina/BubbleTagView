@@ -41,18 +41,10 @@ class BubbleTagViewCell: UICollectionViewCell {
     }
     
     var notSelectedBorderColor : UIColor? {
-        willSet(color) {
+        didSet(color) {
             
-            guard let color = color?.CGColor else  {
-                removeBorders()
-                return
-            }
-        
-            if (selected) {
-                addBordersWithColor(color)
-            }
-            
-            
+            setBorders(selected)
+          
         }
     }
     
@@ -85,18 +77,8 @@ class BubbleTagViewCell: UICollectionViewCell {
     
     var selectedBorderColor : UIColor? {
         willSet(color) {
-            
-            guard let color = color?.CGColor else  {
-                removeBorders()
-                return
-            }
-            
-            
-            
-            if (selected) {
-                addBordersWithColor(color)
-            }
-            
+           setBorders(selected)
+         
             
         }
     }
@@ -115,14 +97,13 @@ class BubbleTagViewCell: UICollectionViewCell {
                 self.backgroundColor = notSelectedColor
                
             }
+            setBorders(selected)
         }
         
-        didSet(selected) {
-            setBorders()
-        }
+
     }
     
-    private func setBorders() {
+    private func setBorders(selected : Bool ) {
         
         
         if (selected) {

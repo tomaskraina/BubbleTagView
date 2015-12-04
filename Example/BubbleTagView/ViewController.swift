@@ -20,10 +20,11 @@ class ViewController: UIViewController, BubbleTagViewDelegate {
         let items =  ["sport", "fashion", "party"]
         bubbleTagView.bubbleDelegate = self
         bubbleTagView.setHorizontalAlignment(.Center)
-        bubbleTagView.allowsMultipleSelection = true
-        bubbleTagView.cellColor = UIColor.blackColor()
-        bubbleTagView.selectedCellColor = UIColor.greenColor()
-        bubbleTagView.selectedCellBorderColor = UIColor.purpleColor()
+        bubbleTagView.cellColor = UIColor.greenColor()
+        bubbleTagView.cellBorderColor = UIColor.blueColor()
+        bubbleTagView.fontColor = UIColor.blueColor()
+
+        bubbleTagView.allowsMultipleSelection = true    
         bubbleTagView.setTags(items)        
 
 
