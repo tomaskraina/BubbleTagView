@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'AB2FA42F29F7E7CE6F09C8BA'
+               BlueprintIdentifier = 'E655F4AA13C6D66137FD8E95'
                BlueprintName = 'BubbleTagView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'BubbleTagView.framework'>

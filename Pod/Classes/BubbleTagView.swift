@@ -46,6 +46,16 @@ extension BubbleTagViewDelegate {
     public var selectedFontColor: UIColor?
     public var selectedCellColor: UIColor? 
     public var selectedCellBorderColor : UIColor?
+    public var insets : UIEdgeInsets? {
+        
+        willSet(newInsets) {
+            if let newInsets = newInsets {
+                self.sizingCell.insets = newInsets
+                self.reloadData()
+            }
+        }
+        
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -125,11 +135,12 @@ extension BubbleTagViewDelegate {
     //MARK: -layout attributes
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: FSQCollectionViewAlignedLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!, remainingLineSpace: CGFloat) -> CGSize {
         let item = self.items[indexPath.item]
-        self.sizingCell.tagLabel.text = item
+        self.sizingCell.setText(item)
         let size = self.sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
         let maximumWidth = CGRectGetWidth(collectionView.bounds)
 
-        return CGSizeMake(min(size.width, maximumWidth), BubbleTagViewConfiguration.cellHeight)
+        
+        return CGSizeMake(min(size.width, maximumWidth),  size.height)
     }
     
     
@@ -169,8 +180,10 @@ extension BubbleTagViewDelegate {
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! BubbleTagViewCell
+       
         
     
+        
         cell.notSelectedFont = font
         
         if let selectedFont = selectedFont {
@@ -192,6 +205,9 @@ extension BubbleTagViewDelegate {
         cell.notSelectedBorderColor = cellBorderColor
         cell.selectedBorderColor = selectedCellBorderColor
         
+        if let insets = insets {
+            cell.insets = insets
+        }
         
         cell.tagLabel.text = self.items[indexPath.row]
 

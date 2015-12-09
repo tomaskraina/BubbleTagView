@@ -25,6 +25,9 @@
   "dependencies": {
     "FSQCollectionViewAlignedLayout": [
       "~> 1.1"
+    ],
+    "SnapKit": [
+      "~> 0.18.0"
     ]
   }
 }

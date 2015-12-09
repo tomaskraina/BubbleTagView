@@ -8,11 +8,28 @@
 
 import UIKit
 
-
+import SnapKit
 class BubbleTagViewCell: UICollectionViewCell {
     
     var tagButton: UIButton!
     var tagLabel : UILabel!
+   
+    var topBottomConstraints : [NSLayoutConstraint] = []
+    var leftRightConstraints : [NSLayoutConstraint] = []
+    
+    var insets : UIEdgeInsets = BubbleTagViewConfiguration.inset {
+        didSet(newInsets) {
+
+          //  self.contentView.removeConstraints(leftRightConstraints)
+           // self.contentView.removeConstraints(topBottomConstraints)
+            
+           // self.tagLabel.removeConstraints(self.tagLabel.constraints)
+            self.updateContstraints()
+            
+            
+        }
+        
+    }
     
     var notSelectedFont : UIFont = BubbleTagViewConfiguration.cellFont {
         willSet(font) {
@@ -32,6 +49,8 @@ class BubbleTagViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    
     var notSelectedColor : UIColor = BubbleTagViewConfiguration.cellBackgroundColor {
         willSet(color) {
             if (!selected) {
@@ -162,25 +181,44 @@ class BubbleTagViewCell: UICollectionViewCell {
         self.layer.borderWidth = 4.0
         
         self.tagLabel = UILabel()
-        self.tagLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        self.tagLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         tagLabel.sizeToFit()
 
         contentView.addSubview(self.tagLabel)
-        
-        let views = ["field": self.tagLabel]
+        updateContstraints()
         
         tagLabel.textAlignment = .Center
-        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[field]-5-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[field]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
         
-        self.contentView.addConstraints(horizontalConstraints)
-        self.contentView.addConstraints(verticalConstraints)
         
+        
+
         self.tagLabel.contentMode = UIViewContentMode.Center
     }
     
+    func setText(text:String) {
+        tagLabel.text = text
+        tagLabel.sizeToFit()
+        
+       // self.setNeedsLayout()
+        //self.layoutIfNeeded()
+    }
+    
+    func updateContstraints ()  {
+    
+        
+        tagLabel.snp_remakeConstraints(closure: { make -> Void in
+            make.edges.equalTo(contentView).inset(insets)
+        })
+        
+        
+   
+        
+        
+        
     
 
+    }
 
 }

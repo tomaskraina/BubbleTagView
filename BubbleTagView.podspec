@@ -23,7 +23,7 @@ Collection view subclass for displaying tags as bubbles.
   s.homepage         = "https://github.com/thefuntasty/BubbleTagView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "Michal Šimík" => "michal.simik@thefuntasty.com" }
+  s.author           = { "Michal Šimík" => "michal.simik@thefuntasty.com", "Martin Pinka" => "martin.pinka@thefuntasty.com"}
   s.source           = { :git => "https://github.com/thefuntasty/BubbleTagView.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
@@ -38,4 +38,5 @@ Collection view subclass for displaying tags as bubbles.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
    s.dependency 'FSQCollectionViewAlignedLayout', '~> 1.1'
+   s.dependency 'SnapKit', '~> 0.18.0'
 end
