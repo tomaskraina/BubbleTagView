@@ -17,7 +17,7 @@ class ViewController: UIViewController, BubbleTagViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let items =  ["sport", "fashion", "party"]
+        let items =  ["Cultura","Food","Sport","Travel"]
         
         bubbleTagView.bubbleDelegate = self
         bubbleTagView.setHorizontalAlignment(.Center)
@@ -27,11 +27,13 @@ class ViewController: UIViewController, BubbleTagViewDelegate {
 
         bubbleTagView.allowsMultipleSelection = true
         
+        
+        
         bubbleTagView.setTags(items)        
 
-        bubbleTagView.insets = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
+        bubbleTagView.insets = UIEdgeInsetsMake(8,12, 8, 12)
         
-        
+    
     }
     
 

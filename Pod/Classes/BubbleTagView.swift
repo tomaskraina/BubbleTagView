@@ -224,7 +224,7 @@ extension BubbleTagViewDelegate {
     }
     
     public override func selectItemAtIndexPath(indexPath: NSIndexPath?, animated: Bool, scrollPosition: UICollectionViewScrollPosition) {
-
+        super.selectItemAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition);
         
     }
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
