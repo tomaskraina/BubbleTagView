@@ -100,8 +100,11 @@ extension BubbleTagViewDelegate {
         
         CATransaction.begin()
         CATransaction.setCompletionBlock { () -> Void in
-            self.collectionViewLayout.invalidateLayout() // Invalidate layout
-            self.invalidateIntrinsicContentSize(nil) // Invalidate intrinsic size
+
+            self.invalidateIntrinsicContentSize({ () -> () in
+                self.setNeedsLayout()
+                self.layoutIfNeeded()
+            }) // Invalidate intrinsic size
         }
         
         self.reloadData() // Reload collectionView
@@ -236,7 +239,6 @@ extension BubbleTagViewDelegate {
                 bubbleDelegate?.bubbleTagView(self, didDeselectTagAtIndexPath: indexPath)
         
     }
-    
-    
+        
 
 }
