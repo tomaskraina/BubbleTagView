@@ -29,7 +29,7 @@ extension BubbleTagViewDelegate {
 }
 
 
-@IBDesignable public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
+public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
 
 
     public var bubbleDelegate : BubbleTagViewDelegate?
@@ -86,9 +86,9 @@ extension BubbleTagViewDelegate {
     
     // MARK: - Designable
     
-    public override func prepareForInterfaceBuilder() {
+  /*  public override func prepareForInterfaceBuilder() {
         self.setTags(["hashtag1", "hashtag2", "hashtag3"])
-    }
+    }*/
     
     //MARK: -public API
     public func setTags(tags: [String]) {
