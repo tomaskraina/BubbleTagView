@@ -200,25 +200,5 @@ class BubbleTagViewCell: UICollectionViewCell {
     func setText(text:String) {
         tagLabel.text = text
         tagLabel.sizeToFit()
-        
-        // self.setNeedsLayout()
-        //self.layoutIfNeeded()
     }
-    
-    //    func updateContstraints ()  {
-    //
-    //
-    //        tagLabel.snp_remakeConstraints(closure: { make -> Void in
-    //            make.edges.equalTo(contentView).inset(insets)
-    //        })
-    //        
-    //        
-    //   
-    //        
-    //        
-    //        
-    //    
-    //
-    //    }
-    
 }
