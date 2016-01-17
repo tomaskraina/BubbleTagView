@@ -15,14 +15,47 @@ public enum HorizontalAlignment {
     case Right
 }
 
-
-@IBDesignable public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
+public protocol BubbleTagViewDelegate {
     
+    func bubbleTagView(bubbleTagView: BubbleTagView, didSelectTagAtIndexPath indexPath:NSIndexPath);
+    func bubbleTagView(bubbleTagView: BubbleTagView, didDeselectTagAtIndexPath indexPath:NSIndexPath);
+    
+}
+
+extension BubbleTagViewDelegate {
+    
+    func bubbleTagView(bubbleTagView: BubbleTagView, didSelectTagAtIndexPath indexPath:NSIndexPath) {}
+    func bubbleTagView(bubbleTagView: BubbleTagView, didDeselectTagAtIndexPath indexPath:NSIndexPath) {}
+}
+
+
+public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    
+    public var bubbleDelegate : BubbleTagViewDelegate?
     var items:[String] =  []
     var hAlignment:FSQCollectionViewHorizontalAlignment = FSQCollectionViewHorizontalAlignment.Center
     private var sizingCell: BubbleTagViewCell!
-    var cellColor = UIColor.blueColor()
-    var font:UIFont?
+    
+    public var cellColor : UIColor = BubbleTagViewConfiguration.cellBackgroundColor
+    public var font:UIFont = BubbleTagViewConfiguration.cellFont
+    public var fontColor:UIColor = BubbleTagViewConfiguration.cellFontColor
+    public var cellBorderColor : UIColor?
+    
+    public var selectedFont : UIFont?
+    public var selectedFontColor: UIColor?
+    public var selectedCellColor: UIColor?
+    public var selectedCellBorderColor : UIColor?
+    public var insets : UIEdgeInsets? {
+        
+        willSet(newInsets) {
+            if let newInsets = newInsets {
+                self.sizingCell.insets = newInsets
+                self.reloadData()
+            }
+        }
+        
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,15 +80,17 @@ public enum HorizontalAlignment {
         
         self.dataSource = self
         self.delegate = self
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = UIScreen.mainScreen().scale
         
         self.backgroundColor = UIColor.clearColor()
     }
     
     // MARK: - Designable
     
-    public override func prepareForInterfaceBuilder() {
-        self.setTags(["hashtag1", "hashtag2", "hashtag3"])
-    }
+    /*  public override func prepareForInterfaceBuilder() {
+    self.setTags(["hashtag1", "hashtag2", "hashtag3"])
+    }*/
     
     //MARK: -public API
     public func setTags(tags: [String]) {
@@ -67,8 +102,11 @@ public enum HorizontalAlignment {
         
         CATransaction.begin()
         CATransaction.setCompletionBlock { () -> Void in
-            self.collectionViewLayout.invalidateLayout() // Invalidate layout
-            self.invalidateIntrinsicContentSize(nil) // Invalidate intrinsic size
+            
+            self.invalidateIntrinsicContentSize({ () -> () in
+                self.setNeedsLayout()
+                self.layoutIfNeeded()
+            }) // Invalidate intrinsic size
         }
         
         self.reloadData() // Reload collectionView
@@ -102,11 +140,12 @@ public enum HorizontalAlignment {
     //MARK: -layout attributes
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: FSQCollectionViewAlignedLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!, remainingLineSpace: CGFloat) -> CGSize {
         let item = self.items[indexPath.item]
-        self.sizingCell.tagButton.setTitle(item, forState: .Normal)
+        self.sizingCell.setText(item)
         let size = self.sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
         let maximumWidth = CGRectGetWidth(collectionView.bounds)
         
-        return CGSizeMake(min(size.width, maximumWidth), BubbleTagViewConfiguration.cellHeight)
+        
+        return CGSizeMake(min(size.width, maximumWidth),  size.height)
     }
     
     
@@ -147,17 +186,36 @@ public enum HorizontalAlignment {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! BubbleTagViewCell
         
-        cell.tagButton.titleLabel!.text = self.items[indexPath.row]
-        if let font = font {
-            cell.tagButton.titleLabel!.font = font
-        } else {
-            cell.tagButton.titleLabel!.font = BubbleTagViewConfiguration.cellFont
+        
+        
+        
+        cell.notSelectedFont = font
+        
+        if let selectedFont = selectedFont {
+            cell.selectedFont = selectedFont
         }
         
-        cell.tagButton.titleLabel!.textColor = BubbleTagViewConfiguration.cellFontColor
+        cell.notSelectedColor = cellColor
         
-        cell.tagButton.setTitle(self.items[indexPath.row], forState: .Normal)
-        cell.backgroundColor = cellColor
+        if let color = selectedCellColor {
+            cell.selectedColor = color
+        }
+        
+        cell.notSelectedFontColor = fontColor
+        
+        if let color = selectedFontColor {
+            cell.selectedFontColor = color
+        }
+        
+        cell.notSelectedBorderColor = cellBorderColor
+        cell.selectedBorderColor = selectedCellBorderColor
+        
+        if let insets = insets {
+            cell.insets = insets
+        }
+        
+        cell.tagLabel.text = self.items[indexPath.row]
+        
         
         return cell
     }
@@ -169,4 +227,20 @@ public enum HorizontalAlignment {
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1;
     }
+    
+    public override func selectItemAtIndexPath(indexPath: NSIndexPath?, animated: Bool, scrollPosition: UICollectionViewScrollPosition) {
+        super.selectItemAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition);
+        
+    }
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        bubbleDelegate?.bubbleTagView(self, didSelectTagAtIndexPath: indexPath)
+    }
+    
+    public func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        bubbleDelegate?.bubbleTagView(self, didDeselectTagAtIndexPath: indexPath)
+        
+    }
+    
+    
 }
