@@ -1,7 +1,9 @@
 PODS:
-  - BubbleTagView (0.1.0):
+  - BubbleTagView (0.1.4):
     - FSQCollectionViewAlignedLayout (~> 1.1)
+    - SnapKit (~> 0.18.0)
   - FSQCollectionViewAlignedLayout (1.1.1)
+  - SnapKit (0.18.0)
 
 DEPENDENCIES:
   - BubbleTagView (from `../`)
@@ -11,7 +13,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BubbleTagView: c436c6c9229632bbbcbf03ad968ac3dcd73995be
+  BubbleTagView: cd5dde1314c74b2c985d53b0ac06435593a386e4
   FSQCollectionViewAlignedLayout: 122006b230bf5635ae159f1ad1eaa9b5ef11391e
+  SnapKit: e1f090a6d47b1dd4bd89b73f72b6746a7835ef3c
 
 COCOAPODS: 0.39.0
