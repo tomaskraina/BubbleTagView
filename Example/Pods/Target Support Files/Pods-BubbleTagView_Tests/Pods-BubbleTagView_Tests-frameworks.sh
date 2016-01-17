@@ -86,10 +86,8 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BubbleTagView_Tests/BubbleTagView.framework"
   install_framework "Pods-BubbleTagView_Tests/FSQCollectionViewAlignedLayout.framework"
-  install_framework "Pods-BubbleTagView_Tests/SnapKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-BubbleTagView_Tests/BubbleTagView.framework"
   install_framework "Pods-BubbleTagView_Tests/FSQCollectionViewAlignedLayout.framework"
-  install_framework "Pods-BubbleTagView_Tests/SnapKit.framework"
 fi

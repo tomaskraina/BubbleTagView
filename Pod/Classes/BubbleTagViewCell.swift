@@ -11,21 +11,11 @@ import UIKit
 import SnapKit
 class BubbleTagViewCell: UICollectionViewCell {
     
-    var tagButton: UIButton!
-    var tagLabel : UILabel!
-    
-    var topBottomConstraints : [NSLayoutConstraint] = []
-    var leftRightConstraints : [NSLayoutConstraint] = []
+    var tagLabel: UILabel!
+    var customConstraints: [NSLayoutConstraint] = []
     
     var insets : UIEdgeInsets = BubbleTagViewConfiguration.inset {
         didSet(newInsets) {
-            
-            //  self.contentView.removeConstraints(leftRightConstraints)
-            // self.contentView.removeConstraints(topBottomConstraints)
-            
-            // self.tagLabel.removeConstraints(self.tagLabel.constraints)
-            //            self.updateContstraints()
-            
             
         }
         
@@ -61,20 +51,15 @@ class BubbleTagViewCell: UICollectionViewCell {
     
     var notSelectedBorderColor : UIColor? {
         didSet(color) {
-            
             setBorders(selected)
-            
         }
     }
     
-    
     var selectedFont : UIFont = BubbleTagViewConfiguration.cellFont {
         willSet(font) {
-            
             if (selected) {
                 self.tagLabel!.font = font
             }
-            
         }
         
     }
@@ -97,10 +82,47 @@ class BubbleTagViewCell: UICollectionViewCell {
     var selectedBorderColor : UIColor? {
         willSet(color) {
             setBorders(selected)
-            
-            
         }
     }
+    
+    // MARK: - Life cycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonInit()
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.commonInit()
+    }
+    
+    
+    func commonInit() {
+       
+        // Setup label
+        self.tagLabel = UILabel()
+        self.contentView.addSubview(self.tagLabel)
+        self.setupConstraintsForLabel()
+        self.tagLabel.textAlignment = .Center
+        
+        self.layer.cornerRadius = CGRectGetHeight(self.layer.frame) / 2
+        self.layer.masksToBounds = true
+    }
+    
+    func setupConstraintsForLabel() {
+        self.tagLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let views = ["label": self.tagLabel]
+        
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[label]-5-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[label(22)]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
+        
+        self.contentView.addConstraints(horizontalConstraints)
+        self.contentView.addConstraints(verticalConstraints)
+    }
+    
     
     override var selected : Bool {
         willSet(selected) {
@@ -108,18 +130,13 @@ class BubbleTagViewCell: UICollectionViewCell {
                 self.tagLabel!.font = selectedFont
                 self.tagLabel!.textColor = selectedFontColor
                 self.backgroundColor = selectedColor
-                
-                
             } else {
                 self.tagLabel!.font = notSelectedFont
                 self.tagLabel!.textColor = notSelectedFontColor
                 self.backgroundColor = notSelectedColor
-                
             }
             setBorders(selected)
         }
-        
-        
     }
     
     private func setBorders(selected : Bool ) {
@@ -148,54 +165,12 @@ class BubbleTagViewCell: UICollectionViewCell {
     private func addBordersWithColor(color : CGColor) {
         self.layer.borderWidth = 1.0
         self.layer.borderColor = color
-        
     }
     
     private func removeBorders() {
         self.layer.borderWidth = 0.0
     }
     
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.clipsToBounds = true
-    }
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonInit()
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit()
-    }
-    
-    
-    func commonInit() {
-        self.layer.cornerRadius = self.layer.frame.height/2
-        self.layer.masksToBounds = true
-        self.layer.borderWidth = 4.0
-        
-        self.tagLabel = UILabel()
-        
-        self.tagLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        tagLabel.sizeToFit()
-        
-        contentView.addSubview(self.tagLabel)
-        //        updateContstraints()
-        
-        tagLabel.textAlignment = .Center
-        
-        
-        
-        
-        self.tagLabel.contentMode = UIViewContentMode.Center
-    }
     
     func setText(text:String) {
         tagLabel.text = text

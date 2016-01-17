@@ -1,6 +1,6 @@
 {
   "name": "BubbleTagView",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "summary": "Collection view subclass for displaying tags as bubbles",
   "description": "Collection view subclass for displaying tags as bubbles.",
   "homepage": "https://github.com/thefuntasty/BubbleTagView",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/thefuntasty/BubbleTagView.git",
-    "tag": "0.1.4"
+    "tag": "0.1.5"
   },
   "platforms": {
     "ios": "8.0"
@@ -25,9 +25,6 @@
   "dependencies": {
     "FSQCollectionViewAlignedLayout": [
       "~> 1.1"
-    ],
-    "SnapKit": [
-      "~> 0.18.0"
     ]
   }
 }
