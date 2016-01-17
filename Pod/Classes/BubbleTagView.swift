@@ -22,7 +22,8 @@ public enum HorizontalAlignment {
     var hAlignment:FSQCollectionViewHorizontalAlignment = FSQCollectionViewHorizontalAlignment.Center
     private var sizingCell: BubbleTagViewCell!
     var cellColor = UIColor.blueColor()
-
+    var font:UIFont?
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.collectionViewLayout = FSQCollectionViewAlignedLayout()
@@ -41,9 +42,6 @@ public enum HorizontalAlignment {
         var frame = self.bounds
         frame.size.height = CGFloat(25)
         
-        if let layout = self.collectionViewLayout as? FSQCollectionViewAlignedLayout {
-            layout.contentInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        }
         
         self.registerClass(BubbleTagViewCell.self, forCellWithReuseIdentifier: "TagCell")
         
@@ -57,7 +55,6 @@ public enum HorizontalAlignment {
     
     public override func prepareForInterfaceBuilder() {
         self.setTags(["hashtag1", "hashtag2", "hashtag3"])
-        self.setHorizontalAlignment(.Left)
     }
     
     //MARK: -public API
@@ -65,7 +62,7 @@ public enum HorizontalAlignment {
         
         self.items = []
         for tag in tags where tag != ""{
-                self.items.append("#\(tag)")
+            self.items.append("#\(tag)")
         }
         
         CATransaction.begin()
@@ -97,13 +94,18 @@ public enum HorizontalAlignment {
         
     }
     
+    
+    public func setFontForCel(font: UIFont) {
+        self.font = font
+    }
+    
     //MARK: -layout attributes
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: FSQCollectionViewAlignedLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!, remainingLineSpace: CGFloat) -> CGSize {
         let item = self.items[indexPath.item]
         self.sizingCell.tagButton.setTitle(item, forState: .Normal)
         let size = self.sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
         let maximumWidth = CGRectGetWidth(collectionView.bounds)
-
+        
         return CGSizeMake(min(size.width, maximumWidth), BubbleTagViewConfiguration.cellHeight)
     }
     
@@ -146,12 +148,17 @@ public enum HorizontalAlignment {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! BubbleTagViewCell
         
         cell.tagButton.titleLabel!.text = self.items[indexPath.row]
-        cell.tagButton.titleLabel!.font = BubbleTagViewConfiguration.cellFont
+        if let font = font {
+            cell.tagButton.titleLabel!.font = font
+        } else {
+            cell.tagButton.titleLabel!.font = BubbleTagViewConfiguration.cellFont
+        }
+        
         cell.tagButton.titleLabel!.textColor = BubbleTagViewConfiguration.cellFontColor
-
+        
         cell.tagButton.setTitle(self.items[indexPath.row], forState: .Normal)
         cell.backgroundColor = cellColor
-
+        
         return cell
     }
     

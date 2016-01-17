@@ -32,7 +32,7 @@ extension UIFont {
     class func avenirHeavyFontOfSize(fontSize: CGFloat) -> UIFont {
         return UIFont(name: "Avenir-Heavy", size: fontSize)!
     }
-
+    
 }
 
 
@@ -40,5 +40,5 @@ extension UIColor {
     class func oceanBlue() -> UIColor {
         return UIColor(red: 0.000, green: 0.792, blue: 0.910, alpha: 1.00)
     }
-
+    
 }
