@@ -14,8 +14,8 @@ class BubbleTagViewCell: UICollectionViewCell {
     var customConstraints: [NSLayoutConstraint] = []
     
     var insets : UIEdgeInsets = BubbleTagViewConfiguration.inset {
-        didSet(newInsets) {
-            
+        didSet {
+            self.contentView.layoutMargins = insets
         }
         
     }
@@ -115,11 +115,12 @@ class BubbleTagViewCell: UICollectionViewCell {
         
         let views = ["label": self.tagLabel]
         
-        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[label]-5-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[label(22)]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[label]-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-[label(22)]-|", options: NSLayoutFormatOptions(), metrics: nil, views: views)
         
         self.contentView.addConstraints(horizontalConstraints)
         self.contentView.addConstraints(verticalConstraints)
+        self.contentView.layoutMargins = insets
     }
     
     

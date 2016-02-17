@@ -31,7 +31,7 @@ class ViewController: UIViewController, BubbleTagViewDelegate {
         
         bubbleTagView.setTags(items)        
 
-        bubbleTagView.insets = UIEdgeInsetsMake(8,12, 8, 12)
+        bubbleTagView.insets = UIEdgeInsetsMake(0, 5, 0, 5)
         
     
     }

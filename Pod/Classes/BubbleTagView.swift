@@ -47,10 +47,9 @@ public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollec
     public var selectedCellColor: UIColor?
     public var selectedCellBorderColor : UIColor?
     public var insets : UIEdgeInsets? {
-        
-        willSet(newInsets) {
-            if let newInsets = newInsets {
-                self.sizingCell.insets = newInsets
+        didSet {
+            if let insets = insets {
+                self.sizingCell.insets = insets
                 self.reloadData()
             }
         }

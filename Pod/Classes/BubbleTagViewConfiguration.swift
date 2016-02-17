@@ -10,7 +10,7 @@ import Foundation
 
 public class BubbleTagViewConfiguration {
     /// View insets
-    public static var inset: UIEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+    public static var inset: UIEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5)
     
     /// Height for item
     public static var cellHeight: CGFloat = 22.0
