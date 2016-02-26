@@ -12,12 +12,13 @@ import BubbleTagView
 class ViewController: UIViewController, BubbleTagViewDelegate {
 
     @IBOutlet weak var bubbleTagView: BubbleTagView! 
+    @IBOutlet weak var pageControl: UIPageControl!
    
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let items =  ["Cultura","Food","Sport","Travel"]
+        let items =  ["Cultura","Food","Sport","Travel", "Tag1", "Tag2", "Tag3", "Tag4", "Tag5", "Tag6", "Tag7", "Tag8", "Tag9", "Tag10", "Tag11", "Tag12", ]
         
         bubbleTagView.bubbleDelegate = self
         bubbleTagView.setHorizontalAlignment(.Center)
@@ -27,7 +28,9 @@ class ViewController: UIViewController, BubbleTagViewDelegate {
 
         bubbleTagView.allowsMultipleSelection = true
         
-        
+        // enable paging
+        bubbleTagView.pagingEnabled = true
+        bubbleTagView.showsHorizontalScrollIndicator = false
         
         bubbleTagView.setTags(items)        
 
@@ -48,6 +51,17 @@ class ViewController: UIViewController, BubbleTagViewDelegate {
     
     func bubbleTagView(bubbleTagView: BubbleTagView, didSelectTagAtIndexPath indexPath: NSIndexPath) {
 
+    }
+    
+    func bubbleTagView(bubbleTagView: BubbleTagView, didChangeNumberOfPages numberOfPages:UInt) {
+    
+        pageControl.numberOfPages = Int(numberOfPages)
+        
+    }
+    func bubbleTagView(bubbleTagView: BubbleTagView, didChangeCurrentPage currentPage:UInt) {
+        
+        pageControl.currentPage = Int(currentPage)
+    
     }
 }
 

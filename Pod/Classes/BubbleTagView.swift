@@ -19,6 +19,8 @@ public protocol BubbleTagViewDelegate {
     
     func bubbleTagView(bubbleTagView: BubbleTagView, didSelectTagAtIndexPath indexPath:NSIndexPath);
     func bubbleTagView(bubbleTagView: BubbleTagView, didDeselectTagAtIndexPath indexPath:NSIndexPath);
+    func bubbleTagView(bubbleTagView: BubbleTagView, didChangeNumberOfPages numberOfPages:UInt)
+    func bubbleTagView(bubbleTagView: BubbleTagView, didChangeCurrentPage currentPage:UInt)
     
 }
 
@@ -26,6 +28,8 @@ extension BubbleTagViewDelegate {
     
     func bubbleTagView(bubbleTagView: BubbleTagView, didSelectTagAtIndexPath indexPath:NSIndexPath) {}
     func bubbleTagView(bubbleTagView: BubbleTagView, didDeselectTagAtIndexPath indexPath:NSIndexPath) {}
+    func bubbleTagView(bubbleTagView: BubbleTagView, didChangeNumberOfPages numberOfPages:UInt) {}
+    func bubbleTagView(bubbleTagView: BubbleTagView, didChangeCurrentPage currentPage:UInt) {}
 }
 
 
@@ -158,6 +162,16 @@ public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollec
         return collectionViewLayout.defaultCellAttributes
     }
     
+    var previousNumberOfPages: UInt?
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: FSQCollectionViewAlignedLayout!, didChangeNumberOfPages numberOfPages: UInt) {
+        
+        if previousNumberOfPages != numberOfPages {
+            previousNumberOfPages = numberOfPages
+            
+            bubbleDelegate?.bubbleTagView(self, didChangeNumberOfPages:numberOfPages)
+        }
+    }
+    
     // MARK:- Autolayout
     override public func intrinsicContentSize() -> CGSize {
         let size = (self.collectionViewLayout as! FSQCollectionViewAlignedLayout).collectionViewContentSize()
@@ -241,5 +255,22 @@ public class BubbleTagView: UICollectionView, UICollectionViewDelegate, UICollec
         
     }
     
+    // MARK: - UIScrollViewDelegate
     
+    var previousPage = 0
+    
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if !pagingEnabled { return }
+        
+        let pageWidth = scrollView.bounds.size.width
+        let fractionalPage = Double(scrollView.contentOffset.x / pageWidth)
+        let currentPage = lround(fractionalPage)
+        
+        if (previousPage != currentPage) {
+            previousPage = currentPage
+            
+            bubbleDelegate?.bubbleTagView(self, didChangeCurrentPage: UInt(currentPage))
+        }
+    }
 }

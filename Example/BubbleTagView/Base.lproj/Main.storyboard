@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,21 +18,30 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SZz-kC-eLX" customClass="BubbleTagView" customModule="BubbleTagView">
-                                <rect key="frame" x="90" y="73" width="420" height="22"/>
-                                <animations/>
+                                <rect key="frame" x="225" y="73" width="150" height="180"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="JNx-1a-dGV"/>
+                                    <constraint firstAttribute="height" constant="180" id="Kck-Qh-WPo"/>
+                                </constraints>
                             </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="rF6-iF-FXQ">
+                                <rect key="frame" x="281" y="253" width="39" height="37"/>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </pageControl>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rF6-iF-FXQ" firstAttribute="centerX" secondItem="SZz-kC-eLX" secondAttribute="centerX" id="Jpk-8Z-l0r"/>
                             <constraint firstItem="SZz-kC-eLX" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="53" id="ZPs-ho-Ig9"/>
-                            <constraint firstAttribute="trailing" secondItem="SZz-kC-eLX" secondAttribute="trailing" constant="90" id="kJq-ek-SgW"/>
-                            <constraint firstItem="SZz-kC-eLX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="90" id="lfz-Xe-jkK"/>
+                            <constraint firstItem="SZz-kC-eLX" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="fMg-2H-JeK"/>
+                            <constraint firstItem="rF6-iF-FXQ" firstAttribute="top" secondItem="SZz-kC-eLX" secondAttribute="bottom" id="kFw-lu-0Dr"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bubbleTagView" destination="SZz-kC-eLX" id="f0q-4z-mLv"/>
+                        <outlet property="pageControl" destination="rF6-iF-FXQ" id="VdU-SE-pGA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

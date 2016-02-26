@@ -1,6 +1,6 @@
 {
   "name": "BubbleTagView",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "summary": "Collection view subclass for displaying tags as bubbles",
   "description": "Collection view subclass for displaying tags as bubbles.",
   "homepage": "https://github.com/thefuntasty/BubbleTagView",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/thefuntasty/BubbleTagView.git",
-    "tag": "0.1.5"
+    "tag": "0.2.0"
   },
   "platforms": {
     "ios": "8.0"

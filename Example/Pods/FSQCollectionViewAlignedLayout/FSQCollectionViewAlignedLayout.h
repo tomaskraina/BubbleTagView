@@ -158,6 +158,18 @@
 - (FSQCollectionViewAlignedLayoutCellAttributes *)collectionView:(UICollectionView *)collectionView
                                                           layout:(FSQCollectionViewAlignedLayout *)collectionViewLayout
                                     attributesForCellAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Informs about change in number of pages if paging is enabled on the collectionView.
+ *
+ *  @param collectionView       The collection view object displaying the layout.
+ *  @param collectionViewLayout The layout object requesting the information.
+ *  @param numberOfPages        The new number of pages
+ */
+- (void)collectionView:(UICollectionView *)collectionView
+                layout:(FSQCollectionViewAlignedLayout *)collectionViewLayout
+didChangeNumberOfPages:(NSUInteger)numberOfPages;
+
 @end
 
 

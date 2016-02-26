@@ -1,17 +1,25 @@
 PODS:
-  - BubbleTagView (0.1.5):
+  - BubbleTagView (0.2.0):
     - FSQCollectionViewAlignedLayout (~> 1.1)
-  - FSQCollectionViewAlignedLayout (1.1.1)
+  - FSQCollectionViewAlignedLayout (1.2.0)
 
 DEPENDENCIES:
   - BubbleTagView (from `../`)
+  - FSQCollectionViewAlignedLayout (from `https://github.com/tomaskraina/FSQCollectionViewAlignedLayout.git`)
 
 EXTERNAL SOURCES:
   BubbleTagView:
     :path: ../
+  FSQCollectionViewAlignedLayout:
+    :git: https://github.com/tomaskraina/FSQCollectionViewAlignedLayout.git
+
+CHECKOUT OPTIONS:
+  FSQCollectionViewAlignedLayout:
+    :commit: 5bfdbe253110fd19a957905f59392cd91e2b7b9f
+    :git: https://github.com/tomaskraina/FSQCollectionViewAlignedLayout.git
 
 SPEC CHECKSUMS:
-  BubbleTagView: e5cd3276d4fad2325cf29607fbaa148bae7264de
-  FSQCollectionViewAlignedLayout: 122006b230bf5635ae159f1ad1eaa9b5ef11391e
+  BubbleTagView: 0676149905f98781a4aa11ecbc725b80b785dcc0
+  FSQCollectionViewAlignedLayout: f79b8b57159b17104484e9849d7e4b704243ed12
 
 COCOAPODS: 0.39.0

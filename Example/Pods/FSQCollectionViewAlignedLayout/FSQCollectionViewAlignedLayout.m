@@ -131,6 +131,9 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
     [super prepareLayout];
     
     CGSize totalSizeOfContent = CGSizeMake(CGRectGetWidth(self.collectionView.frame), self.contentInsets.top);
+    CGSize totalSizeOfPage = totalSizeOfContent;
+    
+    NSUInteger pageIndex = 0;
     
     if (self.sectionsData == nil || self.totalContentSize.width != totalSizeOfContent.width) {
         const CGFloat maxCollectionViewWidth = totalSizeOfContent.width - UIEdgeInsetsHorizontalInset_fsq(self.contentInsets);
@@ -140,7 +143,7 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
         
         for (NSUInteger sectionIndex = 0; sectionIndex < numberOfSections; sectionIndex++) {
             if (sectionIndex > 0) {
-                totalSizeOfContent.height += self.sectionSpacing;
+                totalSizeOfPage.height += self.sectionSpacing;
             }
             
             NSUInteger numberOfCellsInSection = [self.collectionView numberOfItemsInSection:sectionIndex];
@@ -173,15 +176,17 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
             if (headerHeight > 0.0f) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:sectionIndex];
                 UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:indexPath];
-                attributes.frame = CGRectMake(0.0f, totalSizeOfContent.height, totalSizeOfContent.width, headerHeight);
+                attributes.frame = CGRectMake(pageIndex * CGRectGetWidth(self.collectionView.frame), totalSizeOfPage.height, totalSizeOfPage.width, headerHeight);
                 sectionData.headerAttributes = attributes;
                 totalSizeOfSection.width = totalSizeOfContent.width;
                 totalSizeOfSection.height += headerHeight;
+                totalSizeOfPage.height += headerHeight;
             }
             
             BOOL hasContent = (numberOfCellsInSection != 0);
             if (hasContent) {
                 totalSizeOfSection.height += sectionAttributes.insets.top;
+                totalSizeOfPage.height += sectionAttributes.insets.top;
             }
             
             BOOL insertLineBreak = NO;
@@ -194,6 +199,7 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
                 
                 BOOL finishCurrentLine = NO;
                 BOOL gotCellSize = NO;
+                BOOL isNewPage = NO;
                 if (cellIndex >= numberOfCellsInSection) {
                     finishCurrentLine = YES;
                     gotCellSize = YES;
@@ -222,7 +228,11 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
                     if (finishCurrentLine) {
                         totalSizeOfLine.width = maxLineWidth - remainingLineWidth;
                         if (startOfLineIndex > 0) {
-                            totalSizeOfSection.height += sectionAttributes.lineSpacing;
+                            totalSizeOfPage.height += sectionAttributes.lineSpacing;
+                            
+                            if (totalSizeOfPage.height > totalSizeOfSection.height) {
+                                totalSizeOfSection.height += sectionAttributes.lineSpacing;
+                            }
                         }
                         
                         // Need to get the frame before we adjust everything, but dont actually change things until we reset for the next line
@@ -236,10 +246,26 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
                             }
                         }
                         
-                        CGRect lineFrame = CGRectMake(self.contentInsets.left + sectionAttributes.insets.left,
-                                                      totalSizeOfSection.height + totalSizeOfContent.height,
+                        CGRect lineFrame = CGRectMake(self.contentInsets.left + sectionAttributes.insets.left + (pageIndex * self.collectionView.bounds.size.width),
+                                                      //                                                      totalSizeOfSection.height + totalSizeOfContent.height,
+                                                      totalSizeOfPage.height,
                                                       totalSizeOfLine.width,
                                                       totalSizeOfLine.height);
+                        
+                        
+                        // Move the lineFrame to the next page if needed
+                        if (self.collectionView.pagingEnabled && CGRectGetMaxY(lineFrame) + self.contentInsets.bottom > CGRectGetMaxY(self.collectionView.bounds)) {
+                            
+                            isNewPage = YES;
+                            pageIndex++;
+                            totalSizeOfContent.width = ((pageIndex + 1) * self.collectionView.bounds.size.width);
+                            totalSizeOfPage = CGSizeMake(CGRectGetWidth(self.collectionView.frame), self.contentInsets.top + totalSizeOfLine.height);
+                            
+                            lineFrame.origin.x += (pageIndex * self.collectionView.bounds.size.width);
+                            lineFrame.origin.y = self.contentInsets.top;
+                        }
+                        
+                        
                         switch (sectionAttributes.horizontalAlignment) {
                             case FSQCollectionViewHorizontalAlignmentRight:
                                 lineFrame.origin.x += remainingLineWidth;
@@ -294,9 +320,25 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
                         
                         startOfLineIndex = cellIndex;
                         remainingLineWidth = maxLineWidth;
-                        totalSizeOfSection.height += totalSizeOfLine.height;
+                        
+                        
+                        if (isNewPage) {
+                            isNewPage = NO;
+                            CGRect sectionFrame = CGRectMake(0, 0, totalSizeOfSection.width, totalSizeOfSection.height);
+                            CGSize newSectionSize = CGRectUnion(sectionFrame, lineFrame).size;
+                            totalSizeOfSection = newSectionSize;
+                        } else {
+                            totalSizeOfPage.height += totalSizeOfLine.height;
+                            
+                            if (totalSizeOfPage.height > totalSizeOfSection.height) {
+                                totalSizeOfSection.height += totalSizeOfLine.height;
+                            }
+                        }
+                        
                         totalSizeOfLine = CGSizeMake(0, 0);
                         finishCurrentLine = NO;
+                        
+                        // end of 'if (finishCurrentLine)'
                     }
                     
                     if (!gotCellSize) {
@@ -356,18 +398,30 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
                     remainingLineWidth = maxLineWidth - CGRectGetMaxX(layoutRectRelativeToLineOrigin);
                     insertLineBreak = cellAttributes.shouldEndLine || (validHorizontalCellToCellAlignment && sectionAttributes.horizontalAlignment == FSQCollectionViewHorizontalAlignmentRight);
                 }
+                
+                // end of forech cell in section
             }
             
             if (hasContent) {
-                totalSizeOfSection.height += sectionAttributes.insets.bottom;
+                totalSizeOfPage.height += sectionAttributes.insets.bottom;
+                
+                if (totalSizeOfPage.height > totalSizeOfSection.height) {
+                    totalSizeOfSection.height += sectionAttributes.insets.bottom;
+                }
             }
             
+            // TODO: fix section rect
             sectionData.sectionRect = CGRectMake(0.0,
                                                  totalSizeOfContent.height,
                                                  totalSizeOfContent.width,
                                                  totalSizeOfSection.height);
             [self.sectionsData addObject:sectionData];
-            totalSizeOfContent.height += totalSizeOfSection.height;
+            
+            if (totalSizeOfPage.height > totalSizeOfContent.height) {
+                totalSizeOfContent.height = totalSizeOfPage.height;
+            }
+            
+            // end of foreach section
         }
         
         if (totalSizeOfContent.height == self.contentInsets.top) {
@@ -375,6 +429,11 @@ CGFloat UIEdgeInsetsVerticalInset_fsq(UIEdgeInsets insets) {
         }
         else {
             totalSizeOfContent.height += self.contentInsets.bottom;
+        }
+        
+        
+        if (self.collectionView.pagingEnabled && [self.delegate respondsToSelector:@selector(collectionView:layout:didChangeNumberOfPages:)]) {
+            [self.delegate collectionView:self.collectionView layout:self didChangeNumberOfPages:pageIndex + 1];
         }
         
         self.totalContentSize = totalSizeOfContent;
@@ -676,7 +735,7 @@ NSUInteger boundIndexWithComparisonBlock(SearchComparisonBlock comparisonBlock, 
     return [self.sectionsData countByEnumeratingWithState:state objects:buffer count:len];
 }
 
-#pragma mark - Layout information helpers - 
+#pragma mark - Layout information helpers -
 
 - (CGRect)contentFrameForSection:(NSInteger)section {
     return (section < self.sectionsData.count) ? [self.sectionsData[section] sectionRect] : CGRectZero;
